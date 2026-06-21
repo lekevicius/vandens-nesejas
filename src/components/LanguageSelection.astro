@@ -1,0 +1,38 @@
+---
+import {
+  contentByLanguage,
+  getPagePath,
+  getPoemPath,
+  getTextDirection,
+  languageCodes,
+  type Language,
+} from '../data/languages'
+
+export interface LanguageSelectionProps {
+  currentLanguage: Language
+  section?: 'home' | 'poem'
+}
+
+const { currentLanguage, section = 'home' } = Astro.props
+---
+
+<nav class="language-nav" aria-label="Languages">
+  <ul>
+    {
+      languageCodes.map((language) => {
+        const content = contentByLanguage[language]
+        const isCurrent = language === currentLanguage
+        const label = isCurrent ? content['lang-label-full'] : content['lang-label']
+        const href = section === 'poem' ? getPoemPath(language) : getPagePath(language)
+
+        return (
+          <li class:list={{ current: isCurrent }}>
+            <a href={href} lang={language} dir={getTextDirection(language)} aria-current={isCurrent ? 'page' : undefined}>
+              {label}
+            </a>
+          </li>
+        )
+      })
+    }
+  </ul>
+</nav>

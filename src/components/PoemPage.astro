@@ -1,0 +1,29 @@
+---
+import { getMarkdownTitle, renderPoemMarkdown } from '../lib/render'
+import { getPagePath, getTextDirection, type SiteContent } from '../data/languages'
+import LanguageSelection from './LanguageSelection.astro'
+import Layout from '../layouts/Layout.astro'
+
+interface Props {
+  content: SiteContent
+}
+
+const { content } = Astro.props
+const poemTitle = getMarkdownTitle(content.fullPoem.text) || content.fullPoem.label
+const direction = getTextDirection(content.lang)
+---
+
+<Layout title={`${poemTitle} | ${content.title}`} lang={content.lang} dir={direction}>
+  <article class="poem-page">
+    <LanguageSelection currentLanguage={content.lang} section="poem" />
+
+    <a class="back-link" href={getPagePath(content.lang)}>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+        <path fill="currentColor" d="m5.668.497 1.17 1.16-3.505 3.505h8.517v1.693H3.333l3.506 3.5-1.17 1.165L.157 6.009 5.668.497Z"></path>
+      </svg>
+      {content.title}
+    </a>
+
+    <section class="full-poem" set:html={renderPoemMarkdown(content.fullPoem.text)} />
+  </article>
+</Layout>

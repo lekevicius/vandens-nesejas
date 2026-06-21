@@ -1,0 +1,19 @@
+---
+import PoemPage from '../../components/PoemPage.astro'
+import { contentByLanguage, translatedLanguages, type Language } from '../../data/languages'
+
+export function getStaticPaths() {
+  return translatedLanguages.map((lang) => ({
+    params: { lang },
+    props: { content: contentByLanguage[lang] },
+  }))
+}
+
+interface Props {
+  content: (typeof contentByLanguage)[Language]
+}
+
+const { content } = Astro.props
+---
+
+<PoemPage content={content} />

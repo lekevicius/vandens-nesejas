@@ -1,0 +1,23 @@
+---
+import { renderParagraphs } from '../lib/render'
+
+interface Props {
+  id: string
+  title: string
+  body: string
+}
+
+const { id, title, body } = Astro.props
+---
+
+<section id={id} class="speech-block">
+  <details>
+    <summary>
+      <h2>{title}</h2>
+      <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+        <path stroke="currentColor" stroke-width="2" d="m2 5 6 6 6-6"></path>
+      </svg>
+    </summary>
+    <div class="speech-text" set:html={renderParagraphs(body)} />
+  </details>
+</section>

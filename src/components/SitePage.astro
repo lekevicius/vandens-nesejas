@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets'
+import kulbachPhoto from '../assets/kulbach.webp'
+import kvintasPhoto from '../assets/kvintas.webp'
+import sculpturePhoto from '../assets/sculpture.webp'
+import studioPhoto from '../assets/studio.webp'
+import vilniusLogo from '../assets/vilnius.svg'
+import { getPoemPath, getTextDirection, type SiteContent } from '../data/languages'
+import Layout from '../layouts/Layout.astro'
+import { renderInlineMarkdown, renderParagraphs } from '../lib/render'
+import AudioPlayer from './AudioPlayer.astro'
+import ExpandingBlock from './ExpandingBlock.astro'
+import LanguageSelection from './LanguageSelection.astro'
+
+interface Props {
+  content: SiteContent
+}
+
+const { content } = Astro.props
+const direction = getTextDirection(content.lang)
+const fragmentLines = content.fragment.split('\n')
+---
+
+<Layout title={content.title} lang={content.lang} dir={direction}>
+  <article>
+    <LanguageSelection currentLanguage={content.lang} section="home" />
+
+    <header>
+      <h1>{content.title}</h1>
+      <p class="subtitle">{content.subtitle}</p>
+    </header>
+
+    {content.audio && <AudioPlayer audio={content.audio} />}
+
+    <section id="poem" class="poem-fragment" aria-labelledby="poem-fragment-title">
+      <h2 id="poem-fragment-title" class="visually-hidden">{content.fullPoem.label}</h2>
+      <p>
+        {
+          fragmentLines.map((line, index) => (
+            <>
+              {line}
+              {index < fragmentLines.length - 1 && <br />}
+            </>
+          ))
+        }
+      </p>
+      <cite>
+        <span>{content.fragmentAuthor}</span>
+        <a href={getPoemPath(content.lang)}>
+          {content.fullPoem.label}
+          <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 12 12">
+            <path fill="currentColor" d="m6.332 11.503-1.17-1.16 3.505-3.505H.15V5.145h8.517l-3.506-3.5L6.331.48l5.512 5.511-5.511 5.512Z"></path>
+          </svg>
+        </a>
+      </cite>
+    </section>
+
+    <Image
+      class="sculpture-photo"
+      src={sculpturePhoto}
+      alt={content.title}
+      widths={[640, 960, 1280]}
+      sizes="(min-width: 50rem) 42rem, 100vw"
+      loading="eager"
+      fetchpriority="high"
+    />
+
+    <section id="sculpture">
+      <h2>{content.aboutSculpture.title}</h2>
+      <div set:html={renderParagraphs(content.aboutSculpture.body)} />
+    </section>
+
+    <section id="kvintas">
+      <h2>{content.aboutSculptor.title}</h2>
+      <Image src={kvintasPhoto} alt={content.aboutSculptor.title} widths={[320, 480, 640]} sizes="(min-width: 50rem) 20rem, 50vw" />
+      <div set:html={renderParagraphs(content.aboutSculptor.body)} />
+    </section>
+
+    <section id="kulbach">
+      <h2>{content.aboutPoet.title}</h2>
+      <Image src={kulbachPhoto} alt={content.aboutPoet.title} widths={[320, 480, 640]} sizes="(min-width: 50rem) 20rem, 50vw" />
+      <div set:html={renderParagraphs(content.aboutPoet.body)} />
+    </section>
+
+    <ExpandingBlock id="talk" title={content.speech.title} body={content.speech.body} />
+
+    <footer id="credits">
+      {content.credits.map((credit) => <p set:html={renderInlineMarkdown(credit)} />)}
+      <Image src={studioPhoto} alt="Studija" widths={[640, 960, 1280]} sizes="(min-width: 50rem) 42rem, 100vw" />
+    </footer>
+
+    <footer id="financing">
+      <p>{content.funding}</p>
+      <img src={vilniusLogo.src} alt="Vilnius" loading="lazy" decoding="async" />
+    </footer>
+  </article>
+</Layout>

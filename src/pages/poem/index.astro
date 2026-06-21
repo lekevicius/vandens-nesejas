@@ -1,0 +1,6 @@
+---
+import PoemPage from '../../components/PoemPage.astro'
+import { contentByLanguage, defaultLanguage } from '../../data/languages'
+---
+
+<PoemPage content={contentByLanguage[defaultLanguage]} />

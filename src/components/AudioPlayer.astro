@@ -1,0 +1,89 @@
+---
+import poemAudio from '../assets/poem.mp3'
+import type { AudioContent } from '../data/languages'
+
+interface Props {
+  audio: AudioContent
+}
+
+const { audio } = Astro.props
+const audioSrc = audio.src === '/assets/poem.mp3' ? poemAudio : audio.src
+---
+
+<section class="audio-player" data-audio-player>
+  <audio src={audioSrc} preload="metadata"></audio>
+  <button type="button" class="player-control paused" aria-label={audio.label} aria-pressed="false">
+    <span class="player-icon" aria-hidden="true">
+      <span class="play">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M22.5 11.134a1 1 0 0 1 0 1.732l-15 8.66A1 1 0 0 1 6 20.66V3.34a1 1 0 0 1 1.5-.866l15 8.66Z"></path>
+        </svg>
+      </span>
+      <span class="pause">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <rect width="4" height="22" x="6" y="1" fill="currentColor" rx="1"></rect>
+          <rect width="4" height="22" x="14" y="1" fill="currentColor" rx="1"></rect>
+        </svg>
+      </span>
+    </span>
+
+    <span class="audio-info">
+      <span>{audio.label}</span>
+      <span class="duration" data-duration>{audio.duration}</span>
+    </span>
+  </button>
+</section>
+
+<script is:inline type="module">
+  const formatDuration = (seconds) => {
+    if (!Number.isFinite(seconds)) {
+      return null
+    }
+
+    const minutes = Math.floor(seconds / 60)
+    const remainingSeconds = Math.floor(seconds % 60)
+    return `${minutes}:${String(remainingSeconds).padStart(2, '0')}`
+  }
+
+  document.querySelectorAll('[data-audio-player]').forEach((player) => {
+    const audio = player.querySelector('audio')
+    const button = player.querySelector('.player-control')
+    const duration = player.querySelector('[data-duration]')
+
+    if (!(audio instanceof HTMLAudioElement) || !(button instanceof HTMLButtonElement) || !duration) {
+      return
+    }
+
+    const setPlaying = (isPlaying) => {
+      button.classList.toggle('playing', isPlaying)
+      button.classList.toggle('paused', !isPlaying)
+      button.setAttribute('aria-pressed', String(isPlaying))
+    }
+
+    button.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play()
+          setPlaying(true)
+        } catch {
+          setPlaying(false)
+        }
+      } else {
+        audio.pause()
+        setPlaying(false)
+      }
+    })
+
+    audio.addEventListener('ended', () => {
+      audio.currentTime = 0
+      setPlaying(false)
+    })
+
+    audio.addEventListener('timeupdate', () => {
+      const remaining = formatDuration(audio.duration - audio.currentTime)
+      if (remaining) {
+        duration.textContent = remaining
+      }
+    })
+  })
+</script>

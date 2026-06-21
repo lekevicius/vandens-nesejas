@@ -1,0 +1,418 @@
+:root {
+  --text: 25, 25, 25;
+  --panel: rgba(128, 128, 128, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  min-width: 22rem;
+  padding: 0 1rem 1rem;
+  background: white;
+  color: rgb(var(--text));
+  font-size: 16px;
+}
+
+body {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+article {
+  width: 100%;
+  max-width: 40rem;
+  min-width: 20rem;
+}
+
+a {
+  color: rgb(var(--text));
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+button {
+  color: inherit;
+  font: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.language-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1rem;
+  list-style: none;
+}
+
+.language-nav a {
+  display: block;
+  min-height: 2.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-top: 2px solid transparent;
+  color: rgb(var(--text));
+}
+
+.language-nav .current a {
+  border-top-color: rgb(var(--text));
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem;
+  letter-spacing: 0;
+}
+
+h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.17rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+}
+
+header {
+  padding-top: 1rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 3rem;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.8rem;
+}
+
+section {
+  margin-top: 1rem;
+}
+
+.audio-player {
+  margin-top: 1.5rem;
+}
+
+.player-control {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--panel);
+  cursor: pointer;
+  text-align: inherit;
+}
+
+.player-icon,
+.player-icon .play,
+.player-icon .pause {
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: 0 0 1.5rem;
+}
+
+.player-control.paused .pause,
+.player-control.playing .play {
+  display: none;
+}
+
+.audio-info {
+  display: grid;
+  flex: 1;
+  font-size: 0.875rem;
+  letter-spacing: 0.035rem;
+  line-height: 1.25rem;
+  text-transform: uppercase;
+}
+
+.duration {
+  opacity: 0.5;
+}
+
+.poem-fragment p {
+  font-family: 'PT Serif', serif;
+  font-size: 1.125rem;
+  font-style: italic;
+}
+
+:lang(yi) .poem-fragment p {
+  font-style: normal;
+}
+
+.poem-fragment cite {
+  display: block;
+  margin-top: 1rem;
+  margin-inline-start: 2rem;
+  font-style: normal;
+  text-align: end;
+}
+
+.poem-fragment cite a {
+  display: block;
+  font-weight: 600;
+}
+
+.poem-fragment cite svg {
+  margin-inline-start: 0.25rem;
+  vertical-align: middle;
+}
+
+:dir(rtl) .poem-fragment cite a svg {
+  transform: scaleX(-1);
+}
+
+.sculpture-photo,
+#credits img {
+  display: block;
+  width: calc(100% + 2rem);
+  max-width: calc(100% + 2rem);
+  margin-top: 1.5rem;
+  margin-inline: -1rem;
+}
+
+#sculpture,
+#kvintas,
+#kulbach,
+.speech-block,
+#credits {
+  margin-top: 2rem;
+}
+
+#kvintas img {
+  float: left;
+  max-width: 50%;
+  margin-top: 0.5rem;
+  margin-right: 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 0.5rem;
+}
+
+#kulbach img {
+  float: right;
+  max-width: 50%;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+:dir(rtl) #kvintas img {
+  float: right;
+  margin-right: 0;
+  margin-left: 1.5rem;
+}
+
+:dir(rtl) #kulbach img {
+  float: left;
+  margin-right: 1.5rem;
+  margin-left: 0;
+}
+
+p + p {
+  margin-top: 0.75rem;
+}
+
+.speech-block details {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background: var(--panel);
+}
+
+.speech-block summary {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.speech-block summary::-webkit-details-marker {
+  display: none;
+}
+
+.speech-block summary h2 {
+  flex: 1;
+  margin-bottom: 0;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.speech-block summary svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease-in-out;
+}
+
+.speech-block details[open] summary svg {
+  transform: rotate(180deg);
+}
+
+.speech-text {
+  margin-top: 1rem;
+}
+
+.speech-text p {
+  font-size: 0.875rem;
+}
+
+#credits p + p {
+  margin-top: 0.25rem;
+}
+
+#financing {
+  width: 50%;
+  min-width: 20rem;
+  margin: 2rem auto;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+}
+
+#financing img {
+  width: 120px;
+  margin-top: 1rem;
+}
+
+.poem-page {
+  padding-bottom: 3rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+:dir(rtl) .back-link svg {
+  transform: scaleX(-1);
+}
+
+.full-poem {
+  margin-top: 1.5rem;
+}
+
+.full-poem h1 {
+  font-size: 2rem;
+  line-height: 2.6rem;
+}
+
+.full-poem h2 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.poem-stanza {
+  margin-top: 0.75rem;
+  font-family: 'PT Serif', serif;
+  font-size: 1.125rem;
+  font-style: normal;
+  white-space: pre-wrap;
+}
+
+.poem-translator {
+  margin-top: 1.5rem;
+}
+
+@media (min-width: 50rem) {
+  #kvintas img {
+    margin-left: -4rem;
+  }
+
+  #kulbach img {
+    margin-right: -4rem;
+  }
+
+  :dir(rtl) #kvintas img {
+    margin-right: -4rem;
+    margin-left: 1.5rem;
+  }
+
+  :dir(rtl) #kulbach img {
+    margin-right: 1.5rem;
+    margin-left: -4rem;
+  }
+
+  .sculpture-photo,
+  #credits img {
+    border-radius: 0.5rem;
+  }
+}
+
+@media (max-width: 34rem) {
+  html {
+    padding-inline: 0.75rem;
+  }
+
+  header h1,
+  .full-poem h1 {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+  }
+
+  #kvintas img,
+  #kulbach img,
+  :dir(rtl) #kvintas img,
+  :dir(rtl) #kulbach img {
+    float: none;
+    width: 100%;
+    max-width: 100%;
+    margin: 0.5rem 0 1rem;
+  }
+
+  .sculpture-photo,
+  #credits img {
+    width: calc(100% + 1.5rem);
+    max-width: calc(100% + 1.5rem);
+    margin-inline: -0.75rem;
+  }
+
+  #financing {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: 225, 225, 225;
+    --panel: rgba(128, 128, 128, 0.25);
+  }
+
+  html {
+    background: black;
+  }
+}
