@@ -10,6 +10,7 @@ interface Props {
 
 const { content } = Astro.props
 const poemTitle = getMarkdownTitle(content.fullPoem.text) || content.fullPoem.label
+const authorName = content.aboutPoet.title.replace(/\s*\([^)]*\)\s*$/, '')
 const direction = getTextDirection(content.lang)
 ---
 
@@ -24,6 +25,9 @@ const direction = getTextDirection(content.lang)
       {content.title}
     </a>
 
-    <section class="full-poem" set:html={renderPoemMarkdown(content.fullPoem.text)} />
+    <section class="full-poem">
+      <p class="poem-author">{authorName}</p>
+      <div set:html={renderPoemMarkdown(content.fullPoem.text)} />
+    </section>
   </article>
 </Layout>

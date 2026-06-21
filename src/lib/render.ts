@@ -55,7 +55,7 @@ export function renderPoemMarkdown(value: string): string {
 
     if (line.startsWith('#### ')) {
       flushStanza()
-      html.push(`<h2>${renderInlineMarkdown(line.slice(5).trim())}</h2>`)
+      html.push(`<h4>${renderInlineMarkdown(line.slice(5).trim())}</h4>`)
       continue
     }
 

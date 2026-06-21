@@ -323,15 +323,23 @@ p + p {
   margin-top: 1.5rem;
 }
 
+.poem-author {
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.5rem;
+}
+
 .full-poem h1 {
   font-size: 2rem;
   line-height: 2.6rem;
 }
 
-.full-poem h2 {
+.full-poem h4 {
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
   font-size: 1rem;
+  font-weight: 700;
   line-height: 1.5rem;
 }
 
