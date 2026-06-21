@@ -1,46 +1,48 @@
-# Astro Starter Kit: Basics
+# Vandens Nesejas
+
+Astro rebuild of the multilingual Vandens Nesejas site.
+
+## Commands
+
+Run commands from this folder:
+
+| Command | Action |
+| :-- | :-- |
+| `pnpm install` | Install dependencies |
+| `pnpm dev` | Start the local dev server at `localhost:4321` |
+| `pnpm build` | Build the production site to `./dist/` |
+| `pnpm preview` | Preview the production build locally |
+| `pnpm astro ...` | Run Astro CLI commands |
+
+## Routes
+
+- `/` is Lithuanian.
+- `/<lang>/` renders translated site pages for `en`, `yi`, `de`, `fr`, `pl`, and `ru`.
+- `/poem/` is the Lithuanian full poem.
+- `/<lang>/poem/` renders translated full poem pages.
+
+## Content
+
+Canonical JSON content is checked into `src/data/content/` and imported through `src/data/languages.ts`.
+
+When updating copy, edit the source JSONs in `../content/`, then copy them into `src/data/content/` before building:
 
 ```sh
-pnpm create astro@latest -- --template basics
+cp ../content/*.json src/data/content/
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The renderer expects each JSON file to include the page sections, language labels, poem fragment, full poem, speech, credits, and funding fields.
 
-## 🚀 Project Structure
+## Cloudflare Pages Deployment
 
-Inside of your Astro project, you'll see the following folders and files:
+The site is prepared for Cloudflare Pages:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+- Build command: `pnpm build`
+- Build output directory: `dist`
+- Root directory: repository root
+- `wrangler.toml` declares the Pages project name and output directory.
+- `astro.config.mjs` sets `site` to `https://vandensnesejas.org`.
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Custom domains are configured in Cloudflare Pages settings, not through a committed `CNAME` file.
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Because the custom domain is used, no Astro `base` is configured.
